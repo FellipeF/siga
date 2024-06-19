@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bem-vindo</title>
+    <link rel="stylesheet" href="../css/inicio.css">
+    <!-- <script src="../script/websocket.js" defer></script>
+    <script src="../script/ajax.js" defer></script> -->
+</head>
+<header>
+    <h1>Bem-vindo, <%= nome %>!</h1>
+    <p>Você é um <%= tipoUsuario.toLowerCase() %>.</p>
+    <p>E-Mail: <%= email %>
+    </p>
+</header>
+<body>
+    <main id="content">
+        <form action="/upload-pdf" method="post" enctype="multipart/form-data" id="pdfForm">
+            <label for="pdfFile">Selecione um arquivo PDF:</label>
+            <input type="file" id="pdfFile" name="pdfFile" accept=".pdf" required>
+            
+            <label for="pdfTitle">Título do PDF:</label>
+            <input type="text" id="pdfTitle" name="pdfTitle" required>
+            
+            <label for="pdfKeywords">Palavras-chave (até 3, separadas por ponto e vírgula):</label>
+            <input type="text" id="pdfKeywords" name="pdfKeywords" required pattern="[^;]{1,}(;[^;]{1,}){0,2}">
+            
+            <label for="abstract">Resumo (máximo de 500 palavras):</label>
+            <textarea id="resumo" name="resumo" rows="15" cols="50" required></textarea>
+            
+            <button type="submit">Enviar PDF</button>
+        </form>
+    </main>
+    <footer>
+        <p>&copy; 2024 Sistema de Gerenciamento de Artigos</p>
+    </footer>
+</body>
+</html>

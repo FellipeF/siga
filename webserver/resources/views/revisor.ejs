@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bem-vindo</title>
+    <link rel="stylesheet" href="../css/inicio.css">
+</head>
+<body>
+    <header>
+        <h1>Bem-vindo, <%= nome %>!</h1>
+        <p>Você é um <%= tipoUsuario.toLowerCase() %>.</p>
+        <p>E-Mail Cadastrado: <%= email %>
+        </p>
+    </header>
+    <main>
+        <h1> Lista de Artigos Atribuídos </h1>
+        <ol>
+            <% artigos.forEach(artigo=> { %>
+                <hr>
+                <li data-artigo-id="<%= artigo.id %>">
+                    <div>
+                        <p><strong>Título:</strong>
+                            <%= artigo.titulo %>
+                        </p>
+                        <p><strong>Palavras-chave:</strong>
+                            <%= artigo.palavrasChave %>
+                        </p>
+                        <p><strong>Resumo:</strong>
+                            <%= artigo.resumo %>
+                        </p>
+                    </div>
+                    <button style="display: block; margin: 0 auto;"onclick="revisarArtigo('<%= artigo.id %>')">Revisar</button>
+                </li>
+                <% }); %>
+        </ol>
+    </main>
+    <br>
+    <br>
+    <br>
+    <footer>
+        <p>&copy; 2024 Sistema de Gerenciamento de Artigos</p>
+    </footer>
+    <script>
+        function revisarArtigo(artigoId) {
+            window.location.href = '/revisar-artigo?id=' + artigoId;
+        }
+    </script>
+</body>
+</html>

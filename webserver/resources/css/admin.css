@@ -1,0 +1,113 @@
+li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+strong {
+    font-weight: bold;
+}
+
+button {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+h1
+{
+    font-size: 25px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-align: center;
+}
+
+p
+{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+h2
+{
+    font-size: 20px;
+    text-align: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+footer {
+    text-align: center;
+    background-color: rgb(6, 26, 27);
+    color: #fff;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+header {
+    background-color: rgb(6, 26, 27);
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+}
+
+ol {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    position: relative;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+li div {
+    margin-bottom: 10px;
+}
+
+button:last-child {
+    margin-bottom: 0;
+}
+
+.button-container {
+    position: absolute;
+    top: 0px;
+    right: 10px;
+    display: flex;
+    flex-direction: line;
+}
+
+
+.button-approve {
+    background-color: green;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.button-reject {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.tab-content {
+    display: none;
+}
+
+.active {
+    display: block;
+}

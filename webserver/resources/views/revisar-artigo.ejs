@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revisar Artigo</title>
+    <link rel="stylesheet" href="../css/inicio.css">
+</head>
+
+<body>
+    <header>
+        <h1>Revisar Artigo</h1>
+    </header>
+    <main id="content">
+        <div>
+            <p><strong>Título:</strong>
+                <%= artigo.titulo %>
+            </p>
+            <p><strong>Palavras-chave:</strong>
+                <%= artigo.palavrasChave %>
+            </p>
+            <p><strong>Resumo:</strong>
+                <%= artigo.resumo %>
+            </p>
+            <button style="display: block; margin: 0 auto;"
+                onclick="baixarArtigo('<%= artigo.id %>', '<%= artigo.titulo %>')">Baixar Artigo</button>
+        </div>
+        <div id="comentarios-section" style="display: none; margin-top: 20px;">
+            <h2>Adicionar Comentários</h2>
+            <form id="comentarios-form" action="/enviar-comentarios" method="post" onsubmit="return validacao()">
+                <input type="hidden" name="artigoId" value="<%= artigo.id %>">
+                <textarea name="comentarios" rows="10" cols="50"
+                    placeholder="Escreva seus comentários aqui..."></textarea>
+                <br>
+                <div id="radio-section"style="display: none;margin-top: 10px;">
+                    <label><input type="radio" name="estado" value="forte-aprovacao"> Forte Aprovação</label>
+                    <br>
+                    <label><input type="radio" name="estado" value="fraca-aprovacao"> Fraca Aprovação</label>
+                    <br>
+                    <br>
+                    <br>
+                    <label><input type="radio" name="estado" value="forte-reprovacao"> Forte Reprovação</label>
+                    <br>
+                    <label><input type="radio" name="estado" value="fraca-reprovacao"> Fraca Reprovação</label>
+                    <br>
+                </div>
+                <br>
+                <button style="display: block; margin: 0 auto;" type="submit">Enviar Comentários</button>
+            </form>
+        </div>
+    </main>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <footer>
+        <p>&copy; 2024 Sistema de Gerenciamento de Artigos</p>
+    </footer>
+    <script>
+        function baixarArtigo(artigoId, titulo) {
+            window.location.href = `/baixar-artigo?id=${artigoId}&titulo=${encodeURIComponent(titulo)}`;
+            document.getElementById('comentarios-section').style.display = 'block';
+            document.getElementById('radio-section').style.display = 'block';
+        }
+
+        function validacao() {
+            const radios = document.getElementsByName('estado');
+            let selecao = false;
+
+            for (const radio of radios) {
+                if (radio.checked) {
+                    selecao = true;
+                    break;
+                }
+            }
+
+            if (!selecao) {
+                alert('Por favor, selecione um estado.');
+                return false;
+            }
+
+            const comentarios = document.querySelector('textarea[name="comentarios"]').value.trim();
+            if (comentarios === '') {
+                alert('Por favor, escreva seus comentários.');
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+</body>
+
+</html>

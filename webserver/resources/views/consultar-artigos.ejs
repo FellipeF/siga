@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Artigos</title>
+    <link rel="stylesheet" href="../css/autorinicial.css">
+    
+</head>
+<header>
+    <h1>Bem-vindo, <%= nome %>!</h1>
+    <p>Você é um <%= tipoUsuario.toLowerCase() %>.</p>
+    <p>E-Mail: <%= email %>
+    </p>
+</header>
+
+<body>
+    <main id="content">
+        <h2>Estado dos Artigos</h2>
+        <ol>
+            <% artigos.forEach(artigo=> { %>
+            <li data-artigo-id="<%= artigo.id %>">
+                <div>
+                    <p><strong>Título:</strong> <%= artigo.titulo %></p>
+                    <p><strong>Status:</strong> <%= artigo.status %></p>
+                    <p><strong>Resumo:</strong> <%= artigo.resumo %></p>
+                    <p><strong>Palavras-chave:</strong> <%= artigo.palavrasChave %></p>
+                </div>
+                <button style="display: block; margin: 0 auto;" onclick="baixarArtigo('<%= artigo.id %>', '<%= artigo.titulo %>')">Baixar Artigo</button>
+                <hr>
+            </li>
+            <% }); %>
+        </ol>
+    </main>
+    <footer>
+        <p>&copy; 2024 Sistema de Gerenciamento de Artigos</p>
+    </footer>
+    <script>
+        function baixarArtigo(artigoId, titulo) {
+            window.location.href = `/baixar-artigo?id=${artigoId}&titulo=${encodeURIComponent(titulo)}`;
+        }
+    </script>
+</body>
+
+</html>

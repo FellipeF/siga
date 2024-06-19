@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Artigos</title>
+    <link rel="stylesheet" href="../css/admin.css">
+    <style>
+        .tab-content {
+            display: none;
+        }
+
+        .active {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Bem-vindo, <%= nome %>!</h1>
+        <p>Você é um <%= tipoUsuario.toLowerCase() %>.</p>
+        <p>E-Mail: <%= email %>
+        </p>
+    </header>
+
+    <div class="tabs">
+        <button class="tablink" onclick="openTab('tab1')">Artigos Pendentes</button>
+        <button class="tablink" onclick="openTab('tab2')">Artigos com Feedback</button>
+    </div>
+
+    <div id="tab1" class="tab-content active">
+        <h2>Artigos que necessitam de atenção</h2>
+        <div id="message1"></div>
+        <ol>
+            <% artigos.forEach(artigo=> { %>
+                <% if (artigo.revisores.length===0) { %>
+                    <li data-artigo-id="<%= artigo.id %>">
+                        <div>
+                            <p><strong>Título:</strong>
+                                <%= artigo.titulo %>
+                            </p>
+                            <p><strong>Resumo:</strong>
+                                <%= artigo.resumo %>
+                            </p>
+                            <p><strong>Palavras-chave:</strong>
+                                <%= artigo.palavrasChave %>
+                            </p>
+                            <p><strong>Revisores:</strong>
+                                <%= artigo.revisores %>
+                            </p>
+                        </div>
+                        <div class="button-container">
+                            <button onclick="atribuirRevisores('<%= artigo.id %>')">Atribuir Revisores</button>
+                        </div>
+                    </li>
+                    <% } %>
+                        <% }); %>
+        </ol>
+    </div>
+
+    <div id="tab2" class="tab-content">
+        <h2>Artigos que voltaram do feedback</h2>
+        <div id="message2"></div>
+        <ol>
+            <% artigos.forEach(artigo=> { %>
+                <% if (artigo.comentarios.length===3) { %>
+                    <li data-artigo-id="<%= artigo.id %>">
+                        <div class="artigo-content"> <!-- Div para o conteúdo do artigo -->
+                            <p><strong>Título:</strong>
+                                <%= artigo.titulo %>
+                            </p>
+                            <p><strong>Resumo:</strong>
+                                <%= artigo.resumo %>
+                            </p>
+                            <p><strong>Palavras-chave:</strong>
+                                <%= artigo.palavrasChave %>
+                            </p>
+                            <p><strong>Revisores:</strong>
+                                <%= artigo.revisores %>
+                            </p>
+                            <p><strong>Feedback:</strong>
+                                <%= artigo.estado %>
+                            </p>
+                        </div>
+                        <div class="button-container">
+                            <button id="aprovar" class="button-approve"
+                                onclick="enviarEstado('<%= artigo.id %>', 'aprovado')">Aprovar</button>
+                            <br>
+                            <button id="rejeitar" class="button-reject"
+                                onclick="enviarEstado('<%= artigo.id %>', 'rejeitado')">Rejeitar</button>
+                        </div>
+                    </li>
+                    <% } %>
+                        <% }); %>
+        </ol>
+    </div>
+
+    <script>
+        function openTab(tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            document.getElementById(tabName).style.display = "block";
+        }
+
+        async function atribuirRevisores(artigoId) {
+            const revisoresForm = `
+            <form id="revisoresForm">
+                <label for="revisor1">Revisor 1:</label>
+                <input type="email" id="revisor1" name="revisor1" required><br>
+                <label for="revisor2">Revisor 2:</label>
+                <input type="email" id="revisor2" name="revisor2" required><br>
+                <label for="revisor3">Revisor 3:</label>
+                <input type="email" id="revisor3" name="revisor3" required><br>
+                <button type="submit">Atribuir</button>
+            </form>
+        `;
+
+            const liElement = document.querySelector(`li[data-artigo-id="${artigoId}"]`);
+            liElement.innerHTML = '';
+            liElement.insertAdjacentHTML('beforeend', revisoresForm);
+
+            document.getElementById('revisoresForm').addEventListener('submit', async (event) => {
+                event.preventDefault();
+                const revisor1 = document.getElementById('revisor1').value;
+                const revisor2 = document.getElementById('revisor2').value;
+                const revisor3 = document.getElementById('revisor3').value;
+
+                const response = await fetch('/atribuir-revisores', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        artigoId,
+                        revisor1,
+                        revisor2,
+                        revisor3
+                    })
+                });
+                const messageElement = document.getElementById('message');
+                if (response.ok) {
+                    messageElement.textContent = 'Revisores atribuídos com sucesso';
+                    messageElement.style.color = 'green';
+                    const data = await response.text();
+                    console.log(data);
+                    liElement.remove();
+                } else {
+                    messageElement.textContent = 'Erro ao atribuir revisores';
+                    messageElement.style.color = 'red';
+                    console.error('Erro ao atribuir revisores:', response.statusText);
+                }
+                setTimeout(() => {
+                    messageElement.textContent = '';
+                }, 3000);
+            });
+        }
+
+        async function enviarEstado(artigoId, status) {
+            try {
+                const response = await fetch('/conferir-status', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ artigoId, status })
+
+                });
+
+                if (response.ok) {
+                    console.log(`Artigo ${status}!`);
+                    const liElement = document.querySelector(`li[data-artigo-id="${artigoId}"]`);
+                    liElement.style.display = 'none';
+
+                    const messageElement = document.getElementById('message2');
+                    if (status == 'aprovado') {
+                        messageElement.textContent = `Artigo aprovado!`;
+                        messageElement.style.color = 'green';
+                    }
+                    else {
+                        messageElement.textContent = `Artigo rejeitado!`;
+                        messageElement.style.color = 'red';
+                    }
+                } else {
+                    console.error(`Erro ao ${status.toLowerCase()} artigo:`, response.statusText);
+                }
+            } catch (error) {
+                console.error(`Erro ao enviar requisição de ${status.toLowerCase()}:`, error);
+            }
+        }
+    </script>
+</body>
+<footer>
+    <p>&copy; 2024 Sistema de Gerenciamento de Artigos</p>
+</footer>
+
+</html>

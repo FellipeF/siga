@@ -1,0 +1,61 @@
+p
+{
+    color: white;
+    font-size: 19px;
+    text-align: center;
+}
+body {
+    background-color: rgb(6, 26, 27);
+}
+
+a
+{
+    color: yellow;
+}
+
+* {
+    box-sizing: border-box;
+}
+.container {
+    max-width: 500px;
+    margin: 60px auto;
+}
+.container h1 {
+    text-align: center;
+    color: white;
+}
+form {
+    background-color: white;
+    padding: 30px;
+}
+form .input-group {
+    margin-bottom: 15px;
+}
+form label {
+    text-align: center;
+    display: block;
+    margin-bottom: 10px;
+    font-size: 25px;
+}
+form input {   
+    padding: 12px 20px;
+    width: 100%;
+    border: 1px solid #ccc;
+}
+
+.submit-btn {
+    width: 100%;
+    border: none;
+    background: rgb(37, 83, 3);
+    font-size: 18px;
+    color: white;
+    border-radius: 3px;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.submit-btn:hover {
+    background: rgb(27, 58, 2);
+}

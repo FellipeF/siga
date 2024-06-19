@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/style.css" rel="stylesheet">
+    <title>Sistema de Revisão de Artigos</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Entrada no sistema</h1>
+        <p>Insira aqui o seu certificado digital para entrar no SIGA</p>
+        <form action="/upload" method="post" id='form' enctype="multipart/form-data">
+            <div class="input-group">
+                <label for='files'>Bem-Vindo!</label>
+                <input id='files' type="file" name="certificate" single>
+            </div>
+            <button class="submit-btn" id="submitBtn">Enviar Certificado</button>
+        </form>
+        <p>
+            O Sistema de Gerenciamento de Artigos é uma solução blockchain construída em Node.js utilizando o algoritmo de consenso pBFT proposto por Miguel Castro e Barbara Liskov.
+        </p>
+    </div>
+</body>
+</html>
