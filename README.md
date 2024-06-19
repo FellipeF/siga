@@ -23,9 +23,9 @@ O acesso à aplicação é feito mediante certificados digitais X.509 v3 no form
 openssl x509 -noout -text -in seuCertificado.cert.pem
 ```
 
-### 2) Criação do Banco de Dados no RethinkDB
+### 2) Inicialização do RethinkDB
 
-O projeto utiliza o RethinkDB para armazenar os arquivos que são enviados pelo usuário. Cada usuário também possui uma ID única que será sua representação na blockchain a fim de preservar a identidade dos autores como dita o sistema de revisão por pares duplo-cego.
+O projeto utiliza o RethinkDB para armazenar os arquivos que são enviados pelo usuário. Cada usuário também possui uma ID única que será sua representação na blockchain a fim de preservar a identidade dos autores como dita o sistema de revisão por pares duplo-cego. Na implementação atual, já está sendo feito o necessário para criar o banco e as tabelas em uma primeira execução, mas ainda há a necessidade da inicialização do RethinkDB por parte do usuário.
 
 ## Sobre o Servidor HTTPS
 
