@@ -1,0 +1,1 @@
+SECRET="NODE1" P2P_PORT=5001 HTTPS_PORT=8444 PEERS=ws://localhost:5000 nodemon index.js
