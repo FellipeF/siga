@@ -1,1 +1,0 @@
-SECRET="NODE0" P2P_PORT=5000 HTTPS_PORT=8443 nodemon index.js
